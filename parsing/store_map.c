@@ -62,7 +62,6 @@ int	store_map(t_map *map, int start)
 			map_end = 1;
 		else
 		{
-			printf("im in\n");
 			if (map_end)
 			{
 				if (only_spaces(map->cmap[i]))
@@ -73,7 +72,6 @@ int	store_map(t_map *map, int start)
 		}
 		i++;
 	}
-	printf("Map rows: %d\n", map->rows);
 	if (map->rows == 0)
 		return (print_error("Error: Empty map\n"));
 	return (copy_map(map, start));

@@ -3,13 +3,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Directories
-MLX_DIR = ./minilibx-linux
+MLX_DIR = ./minilibx_mac
 LIBFT_DIR = ./libft
 GNL_DIR = ./get_next_line
 
-
 # Libraries
-MLX = $(MLX_DIR)/libmlx.a -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLX = $(MLX_DIR)/libmlx.a -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Sources
@@ -20,14 +19,15 @@ SRC = main.c init.c free.c \
 
 OBJ = $(SRC:.c=.o)
 
+# Include paths
 INCLUDES = -Iinc -I$(MLX_DIR) -I$(LIBFT_DIR) -I$(GNL_DIR)
 
 # Build rules
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C $(MLX_DIR)
-	make -C $(LIBFT_DIR)
+	@$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(INCLUDES) -o $(NAME)
 
 %.o: %.c
@@ -35,12 +35,12 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
-	make -C $(MLX_DIR) clean
-	make -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

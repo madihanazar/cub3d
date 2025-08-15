@@ -50,7 +50,7 @@ int	parse_elements(t_elements *elem, t_map *map, t_vars *vars)
 	}
 	if (elem->all_parsed < 6)
 		return (print_error("Error: Missing elements\n"));
-	while (map->cmap[vars->i] && only_spaces(map->cmap[vars->i]))
+	while (map->cmap[vars->i] && !only_spaces(map->cmap[vars->i]))
 		vars->i++;
 	if (store_map(map, vars->i))
 		return (1);

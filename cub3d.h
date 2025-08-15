@@ -8,11 +8,8 @@
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>
-# include "mlx.h"
-
-// in cub3d.h
-extern int worldMap[24][24];
-
+#  include "minilibx_mac/mlx.h"
+//#  include "minilibx_linux/mlx.h" - for windows/linux
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
