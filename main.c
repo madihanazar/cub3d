@@ -18,7 +18,7 @@
 // 	data->mlx.mlx = mlx_init();
 // 	if (!data->mlx.mlx)
 // 	{
-// 		write(2, "Error: mlx_init failed\n", 24);
+// 		printf("Error: mlx_init failed\n");
 // 		free_data(data);
 // 		exit(1);
 // 	}
@@ -27,8 +27,8 @@
 // 			"cub3D");
 // 	if (!data->mlx.win)
 // 	{
-// 		write(2, "Error: mlx_new_window failed\n", 29);
-// 		destroy_imgs(data);
+// 		printf("Error: mlx_new_window failed\n");
+// 		destroy_image(data);
 // 		free(data->mlx.mlx);
 // 		free_data(data);
 // 		exit(1);

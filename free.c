@@ -39,3 +39,15 @@ void	free_data(t_data *data)
 	free(data->elements.we);
 	free(data->elements.ea);
 }
+
+void	destroy_image(t_data *data)
+{
+	if (data->texture.no.img)
+		mlx_destroy_image(data->mlx.mlx, data->texture.no.img);
+	if (data->texture.so.img)
+		mlx_destroy_image(data->mlx.mlx, data->texture.so.img);
+	if (data->texture.we.img)
+		mlx_destroy_image(data->mlx.mlx, data->texture.we.img);
+	if (data->texture.ea.img)
+		mlx_destroy_image(data->mlx.mlx, data->texture.ea.img);
+}

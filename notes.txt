@@ -1,0 +1,4 @@
+PARSING:
+
+1. need to finalize how to handle spaces
+2. need to ensure all the elements are present in the map  - F C - correct count

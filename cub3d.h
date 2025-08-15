@@ -8,12 +8,30 @@
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>
+# include <stdbool.h>
 // #  include "minilibx_mac/mlx.h"
-#  include "minilibx-linux/mlx.h" - for windows/linux
+#  include "minilibx-linux/mlx.h" //for windows/linux
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
-# define ESC_KEY 65307 // Linux (X11). For Mac use 53.
+# if __APPLE__
+#  define ESC_KEY 53
+#  define W_KEY 13
+#  define A_KEY 0
+#  define S_KEY 1
+#  define D_KEY 2
+#  define RIGHT_ARROW 124
+#  define LEFT_ARROW 123
+# elif __linux__
+#  define ESC_KEY 65307
+#  define W_KEY 119
+#  define A_KEY 97
+#  define S_KEY 115
+#  define D_KEY 100
+#  define RIGHT_ARROW 65363
+#  define LEFT_ARROW 65361
+# endif
+// # define WIN_WIDTH 800
+// # define WIN_HEIGHT 600
+// # define ESC_KEY 65307 // Linux (X11). For Mac use 53.
 
 # define GREEN 0x228B22
 # define SKYBLUE 0x87CEEB
@@ -137,22 +155,28 @@ typedef struct s_data
 	t_ray			ray;
 	t_textures		texture;
 	double			delta_time;
-	//struct timeval	last;
-	//bool			keys[7];
+	struct timeval	last;
+	bool			keys[7];
 }					t_data;
 
 void draw_background(t_game *game);
 void draw_walls(t_game *game);
 int		close_game(t_game *game);
-int		key_press(int keycode, t_game *game);
+
+//main.c
+void	init_start_game(t_data *data);
 
 //init.c
 void	init_data(t_data *data);
 void	init_vars(t_vars *vars);
+void	init_texture(t_data *data);
+void	xpm_to_image(t_data *data);
+void	init_player(t_data *data);
 
 //free.c
 void fr_array(char **arr);
 void	free_data(t_data *data);
+void	destroy_image(t_data *data);
 
 //elements.c
 int	handle_color(char **str);
@@ -193,5 +217,11 @@ int	validate_map_walls(t_map *map, t_vars vars);
 int	check_neighbours(t_map *map, int i, int j);
 int	valid_zero_player(t_map *map);
 int	validate_map(t_map *map);
+
+//hooks.c
+void    mlx_loops_hooks(t_data *data);
+int	key_release(int keycode, t_data *data);
+int	key_press(int keycode, t_data *data);
+int	exit_window(t_data *data);
 
 #endif
