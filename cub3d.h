@@ -8,8 +8,8 @@
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>
-#  include "minilibx_mac/mlx.h"
-//#  include "minilibx_linux/mlx.h" - for windows/linux
+// #  include "minilibx_mac/mlx.h"
+#  include "minilibx-linux/mlx.h" - for windows/linux
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600

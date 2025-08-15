@@ -3,12 +3,14 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Directories
-MLX_DIR = ./minilibx_mac
+# MLX_DIR = ./minilibx_mac
+MLX_DIR = ./minilibx-linux
 LIBFT_DIR = ./libft
 GNL_DIR = ./get_next_line
 
 # Libraries
-MLX = $(MLX_DIR)/libmlx.a -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# MLX = $(MLX_DIR)/libmlx.a -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+MLX = $(MLX_DIR)/libmlx.a -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Sources
