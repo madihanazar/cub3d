@@ -9,6 +9,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <sys/time.h>
 // #  include "minilibx_mac/mlx.h"
 #  include "minilibx-linux/mlx.h" //for windows/linux
 
@@ -28,9 +29,9 @@
 #  define D_KEY 100
 #  define RIGHT_ARROW 65363
 #  define LEFT_ARROW 65361
-# endif
-// # define WIN_WIDTH 800
-// # define WIN_HEIGHT 600
+ # endif
+ # define WIN_WIDTH 800
+ # define WIN_HEIGHT 600
 // # define ESC_KEY 65307 // Linux (X11). For Mac use 53.
 
 # define GREEN 0x228B22
@@ -40,6 +41,17 @@
 
 #define MOVE_SPEED 0.1
 #define ROT_SPEED 0.05
+# define TEX_SIZE 64
+# define MOV_SPEED 2.0
+# define ROT_SPEED 0.7
+# define COLLI 0.15
+# define MLEFT 0
+# define MRIGHT 1
+# define MUP 1
+# define MDOWN 0
+# define R_ROTATE 1
+# define L_ROTATE 0
+
 
 typedef struct s_vars
 {
@@ -64,6 +76,16 @@ typedef struct s_game
     double  planeX;
     double  planeY;
 }	t_game;
+
+typedef struct s_cord
+{
+	int				row_length_y;
+	int				row_length_cy;
+	int				new_x;
+	int				new_y;
+	int				curr_y;
+	int				curr_x;
+}					t_cord;
 
 typedef struct s_image
 {
@@ -223,5 +245,16 @@ void    mlx_loops_hooks(t_data *data);
 int	key_release(int keycode, t_data *data);
 int	key_press(int keycode, t_data *data);
 int	exit_window(t_data *data);
+int	render_frames(t_data *data);
+
+//movement.c
+void	move_vertically(t_data *data, int direction);
+void	move_horizontally(t_data *data, int direction);
+void	rotate(t_player *pl, int direction, t_data *data);
+void	check_movement(t_data *data);
+void	colour_floor_ceiling(t_data *data);
+
+//moveplayer.c
+void	move_player(t_data *data, double move_x, double move_y, t_cord vars)
 
 #endif
