@@ -181,6 +181,20 @@ typedef struct s_data
 	bool			keys[7];
 }					t_data;
 
+typedef struct s_draw_walls
+{
+	int				lineheight;
+	int				drawstart;
+	int				drawend;
+	int				colour;
+	double			wall_x;
+	int				tex_x;
+	int				tex_y;
+	t_image			*current_tex;
+	double			step;
+	double			tex_pos;
+}					t_draw_walls;
+
 void draw_background(t_game *game);
 void draw_walls(t_game *game);
 int		close_game(t_game *game);
@@ -255,6 +269,14 @@ void	check_movement(t_data *data);
 void	colour_floor_ceiling(t_data *data);
 
 //moveplayer.c
-void	move_player(t_data *data, double move_x, double move_y, t_cord vars)
+void	move_player(t_data *data, double move_x, double move_y, t_cord vars);
+
+//rays.c
+void	cast_rays(t_ray *ray, t_player *player, t_data *data);
+
+//draw_walls.c
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
+int	get_pixel_colour(t_textures *texture, int tex_x, int tex_y, t_ray *ray);
+void	draw_walls(t_ray *ray, t_data *data, int x);
 
 #endif
