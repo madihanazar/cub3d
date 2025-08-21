@@ -222,7 +222,7 @@ void	destroy_image(t_data *data);
 
 // parsing/elements.c
 int		handle_color(char **str);
-int		parse_rgb(char *str);
+int		parse_rgb(char c, t_elements *elem, char *str);
 int		handle_tex(t_elements *elem, char *trim, char **arr);
 int		store_elem(t_elements *elem, char *line);
 
