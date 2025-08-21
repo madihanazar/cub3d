@@ -17,6 +17,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRC = main.c init.c free.c \
 	  parsing/elements.c parsing/file_utils.c parsing/map_utils.c \
 	  parsing/parse_map.c parsing/validate_map.c parsing/store_map.c \
+	  parsing/map_utils_2.c parsing/validate_utils.c
 	  get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)

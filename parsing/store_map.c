@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnazar <mnazar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: nkunnath <nkunnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 09:52:12 by mnazar            #+#    #+#             */
-/*   Updated: 2025/08/14 09:52:12 by mnazar           ###   ########.fr       */
+/*   Created: 2025/08/19 17:29:47 by nkunnath          #+#    #+#             */
+/*   Updated: 2025/08/19 17:43:13 by nkunnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ int	store_map(t_map *map, int start)
 		else
 		{
 			if (map_end)
-			{
-				if (only_spaces(map->cmap[i]))
-					return (print_error("Error: Empty line in map\n"));
-			}
+				return (print_error("Error: Empty line(s) in map\n"));
 			else
 				map->rows++;
 		}
@@ -75,42 +72,4 @@ int	store_map(t_map *map, int start)
 	if (map->rows == 0)
 		return (print_error("Error: Empty map\n"));
 	return (copy_map(map, start));
-}
-
-int	check_map_space(t_map *map, int i, int j)
-{
-	if ((j + 1 < (int)(ft_strlen(map->map[i])) && map->map[i][j + 1]
-	&& map->map[i][j + 1] != '1' && map->map[i][j + 1] != ' ')
-	|| (j > 0 && map->map[i][j - 1] && map->map[i][j - 1] != '1'
-	&& map->map[i][j - 1] != ' ') ||
-	(i + 1 < (map->rows) && j < (int)ft_strlen(map->map[i + 1])
-	&& map->map[i + 1] && map->map[i + 1][j] != '1'
-	&& map->map[i + 1][j] != ' ') ||
-	(i > 0 && j < (int)ft_strlen(map->map[i - 1]) && map->map[i - 1] &&
-	map->map[i - 1][j] != '1' && map->map[i - 1][j] != ' '))
-		return (0);
-	return (1);
-}
-
-int	validate_spaces(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (map->map[i])
-	{
-		j = 1;
-		while (map->map[i][j])
-		{
-			if (map->map[i][j] == ' ')
-			{
-				if (!check_map_space(map, i, j))
-					return (print_error("Error: Space is not closed\n"));
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }

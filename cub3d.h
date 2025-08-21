@@ -10,8 +10,8 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <sys/time.h>
-// #  include "minilibx_mac/mlx.h"
-#  include "minilibx-linux/mlx.h" //for windows/linux
+#  include "minilibx_mac/mlx.h"
+// #  include "minilibx-linux/mlx.h" //for windows/linux
 
 # if __APPLE__
 #  define ESC_KEY 53
@@ -116,6 +116,12 @@ typedef struct s_elements
 	char			*so;
 	char			*we;
 	char			*ea;
+	int				floor_count;
+	int				ceil_count;
+	int				no_count;
+	int				so_count;
+	int				ea_count;
+	int				we_count;
 	int				floor;
 	int				ceiling;
 	int				all_parsed;
@@ -195,8 +201,8 @@ typedef struct s_draw_walls
 	double			tex_pos;
 }					t_draw_walls;
 
-void draw_background(t_game *game);
-void draw_walls(t_game *game);
+void 	draw_background(t_game *game);
+void 	draw_walls(t_game *game);
 int		close_game(t_game *game);
 
 //main.c
@@ -210,56 +216,63 @@ void	xpm_to_image(t_data *data);
 void	init_player(t_data *data);
 
 //free.c
-void fr_array(char **arr);
+void 	fr_array(char **arr);
 void	free_data(t_data *data);
 void	destroy_image(t_data *data);
 
-//elements.c
-int	handle_color(char **str);
-int	parse_rgb(char *str);
-int	handle_tex(t_elements *elem, char *trim, char **arr);
-int	store_elem(t_elements *elem, char *line);
+// parsing/elements.c
+int		handle_color(char **str);
+int		parse_rgb(char *str);
+int		handle_tex(t_elements *elem, char *trim, char **arr);
+int		store_elem(t_elements *elem, char *line);
 
-//file_utils.c
-int	file_error(int id);
-int	check_file(char *file);
-int	get_file_size(char *file);
-int	print_error(char *str);
-int	read_file_array(char *file, t_map *map, t_vars var);
+// parsing/file_utils.c
+int		check_file(char *file);
+int		read_file_array(char *file, t_map *map, t_vars vars, int size);
+int		print_error(char *str);
+int		get_file_size(char *file);
 
-//map_utils.c
-void	calculate_map_rows(t_map *map);
-int	top_bot_row(char *line);
-int	only_spaces(char *str);
-int	check_multiple_commas(char *str);
+// parsing/map_utils.c
+int		only_spaces(char *str);
+int		check_multiple_commas(char *str);
 void	free_str(char **str);
+void	calculate_map_rows(t_map *map);
+int		top_bot_row(char *line);
 
-//parse_map.c
-int	store_tex(t_elements *elem, char *trim, char **arr);
-int	assign_tex(char **tex, char *trim);
-int	parse_elements(t_elements *elem, t_map *map, t_vars *vars);
-int	parse_map(char *argv, t_data *data);
+// parsing/map_utils_2.c
+void	check_counts(char c, t_elements *elem);
+int		check_map_space(t_map *map, int i, int j);
+int		validate_spaces(t_map *map);
 
-//store_map.c
-int	empty_line(char *str);
-int	copy_map(t_map *map, int start);
-int	store_map(t_map *map, int start);
-int	check_map_space(t_map *map, int i, int j);
-int	validate_spaces(t_map *map);
+// parsing/parse_map.c
+int		parse_map(char *argv, t_data *data);
+int		parse_elements(t_elements *elems, t_map *map, t_vars vars);
+int		store_tex(t_elements *elem, char *trim, char **arr);
 
-//validate_map.c
-int	validate_map_chars(t_map *map, t_vars vars);
-int	validate_map_walls(t_map *map, t_vars vars);
-int	check_neighbours(t_map *map, int i, int j);
-int	valid_zero_player(t_map *map);
-int	validate_map(t_map *map);
+// parsing/store_map.c
+int		store_map(t_map *map, int start);
+int		empty_line(char *str);
+int		copy_map(t_map *map, int start);
+
+// parsing/validate_map.c
+int		validate_map(t_map *map);
+int		validate_map_chars(t_map *map, t_vars vars);
+int		validate_map_walls(t_map *map, t_vars vars);
+int		valid_zero_player(t_map *map);
+int		check_neighbours(t_map *map, int i, int j);
+
+// parsing/validate_utils.c
+int		check_eastside(t_map *map, int i, int j);
+int		check_westside(t_map *map, int i, int j);
+int		check_southside(t_map *map, int i, int j);
+int		check_northside(t_map *map, int i, int j);
 
 //hooks.c
 void    mlx_loops_hooks(t_data *data);
-int	key_release(int keycode, t_data *data);
-int	key_press(int keycode, t_data *data);
-int	exit_window(t_data *data);
-int	render_frames(t_data *data);
+int		key_release(int keycode, t_data *data);
+int		key_press(int keycode, t_data *data);
+int		exit_window(t_data *data);
+int		render_frames(t_data *data);
 
 //movement.c
 void	move_vertically(t_data *data, int direction);
@@ -276,7 +289,7 @@ void	cast_rays(t_ray *ray, t_player *player, t_data *data);
 
 //draw_walls.c
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-int	get_pixel_colour(t_textures *texture, int tex_x, int tex_y, t_ray *ray);
+int		get_pixel_colour(t_textures *texture, int tex_x, int tex_y, t_ray *ray);
 void	draw_walls(t_ray *ray, t_data *data, int x);
 
 #endif

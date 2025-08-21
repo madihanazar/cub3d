@@ -1,19 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnazar <mnazar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: nkunnath <nkunnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 10:14:29 by mnazar            #+#    #+#             */
-/*   Updated: 2025/08/14 10:14:29 by mnazar           ###   ########.fr       */
+/*   Created: 2025/08/13 23:14:44 by mnazar            #+#    #+#             */
+/*   Updated: 2025/08/19 17:28:11 by nkunnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+int	check_neighbours(t_map *map, int i, int j)
+{
+	int	rlen;
+
+	rlen = (int)ft_strlen(map->map[i]);
+	if (i <= 0 || i >= map->rows - 1 || j <= 0 || j >= rlen - 1)
+		return (0);
+	if (j + 1 >= rlen || map->map[i][j + 1] == '\0'
+		|| map->map[i][j + 1] == ' ')
+		return (0);
+	if (j - 1 < 0 || map->map[i][j - 1] == '\0' || map->map[i][j - 1] == ' ')
+		return (0);
+	if (i + 1 >= map->rows || j >= (int)ft_strlen(map->map[i + 1])
+		|| map->map[i + 1][j] == '\0' || map->map[i + 1][j] == ' ')
+		return (0);
+	if (i - 1 < 0 || j >= (int)ft_strlen(map->map[i - 1])
+		|| map->map[i - 1][j] == '\0' || map->map[i - 1][j] == ' ')
+		return (0);
+	return (1);
+}
+
+int	valid_zero_player(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < map->rows - 1)
+	{
+		j = 1;
+		while (j < (int)ft_strlen(map->map[i]) - 1)
+		{
+			if (map->map[i][j] == '0')
+			{
+				if (check_neighbours(map, i, j) == 0)
+					return (print_error("Error: Floor not enclosed\n"));
+			}
+			else if (map->map[i][j] == map->direction)
+			{
+				if (check_neighbours(map, i, j) == 0)
+					return (print_error("Error: Player not enclosed\n"));
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	validate_map_chars(t_map *map, t_vars vars)
 {
+	init_vars(&vars);
 	while (map->map[vars.i])
 	{
 		vars.j = 0;
@@ -44,9 +94,9 @@ int	validate_map_walls(t_map *map, t_vars vars)
 	int	i;
 
 	i = 0;
-	if (!top_bot_row(map->map[0]) || !top_bot_row(map->map[map->rows - 1]))
-		return (print_error("Error: Border is not closed\n"));
-	while (++i < map->rows -1)
+	if (top_bot_row(map->map[0]) == 0 || top_bot_row(map->map[map->rows - 1]) == 0)
+		return (print_error("Error: Top/Bottom border is not closed\n"));
+	while (++i < map->rows - 1)
 	{
 		vars.k = ft_strlen(map->map[i]);
 		vars.j = 0;
@@ -58,61 +108,12 @@ int	validate_map_walls(t_map *map, t_vars vars)
 			continue ;
 		}
 		if (map->map[i][vars.j] != '1')
-			return (print_error("Error: Right border is not closed\n"));
+			return (print_error("Error: Left border is not closed\n"));
 		vars.j = vars.k - 1;
 		while (vars.j >= 0 && map->map[i][vars.j] == ' ')
 			vars.j--;
 		if (map->map[i][vars.j] != '1')
-			return (print_error("Error: Left border is not closed\n"));
-	}
-	return (0);
-}
-
-int	check_neighbours(t_map *map, int i, int j)
-{
-	int	rlen;
-
-	rlen = (int)ft_strlen(map->map[i]);
-	if (i <= 0 || i >= map->rows - 1 || j <= 0 || j >= rlen - 1)
-		return (0);
-	if (j + 1 >= rlen || map->map[i][j + 1] == '\0'
-		|| map->map[i][j + 1] == ' ')
-		return (0);
-	if (j - 1 < 0 || map->map[i][j - 1] == '\0' || map->map[i][j - 1] == ' ')
-		return (0);
-	if (i + 1 >= map->rows || j >= (int)ft_strlen(map->map[i + 1])
-		|| map->map[i + 1][j] == '\0' || map->map[i + 1][j] == ' ')
-		return (0);
-	if (i - 1 < 0 || j >= (int)ft_strlen(map->map[i - 1])
-		|| map->map[i - 1][j] == '\0' || map->map[i - 1][j] == ' ')
-		return (0);
-	return (1);
-}
-
-int	valid_zero_player(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < map->rows -1)
-	{
-		j = 1;
-		while (j < (int)ft_strlen(map->map[i]) - 1)
-		{
-			if (map->map[i][j] == '0')
-			{
-				if (!check_neighbours(map, i, j))
-					return (print_error("Error: Floor not enclosed\n"));
-			}
-			else if (map->map[i][j] == map->direction)
-			{
-				if (!check_neighbours(map, i, j))
-					return (print_error("Error: Player not enclosed\n"));
-			}
-			j++;
-		}
-		i++;
+			return (print_error("Error: Right border is not closed\n"));
 	}
 	return (0);
 }
@@ -121,13 +122,13 @@ int	validate_map(t_map *map)
 {
 	t_vars	vars;
 
-	init_vars(&vars);
-	if (validate_map_chars(map, vars))
+	if (validate_map_chars(map, vars) == 1)
 		return (1);
-	calculate_map_rows(map);
-	init_vars(&vars);
-	if (validate_map_walls(map, vars) || validate_spaces(map)
-		|| valid_zero_player(map))
+	if (validate_map_walls(map, vars) == 1)
+		return (1);
+	if (validate_spaces(map) == 1)
+		return (1);
+	if (valid_zero_player(map) == 1)
 		return (1);
 	return (0);
 }

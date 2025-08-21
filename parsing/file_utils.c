@@ -3,20 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnazar <mnazar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: nkunnath <nkunnath@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 23:13:36 by mnazar            #+#    #+#             */
-/*   Updated: 2025/08/13 23:13:36 by mnazar           ###   ########.fr       */
+/*   Updated: 2025/08/18 13:19:32 by nkunnath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"	
+#include "../cub3d.h"
 
-int	file_error(int id)
+int	print_error(char *str)
 {
-	if (id == 0)
-		printf("Error has occurred\n");
-	return (1);
+	if (str)
+	{
+		write(2, str, ft_strlen(str));
+		return (1);
+	}
+	return (0);
 }
 
 int	check_file(char *file)
@@ -36,11 +39,11 @@ int	check_file(char *file)
 int	get_file_size(char *file)
 {
 	int		fd;
-	char	*line;
 	int		size;
+	char	*line;
 
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	if (fd < 0)
 		return (0);
 	size = 0;
 	line = get_next_line(fd);
@@ -54,33 +57,27 @@ int	get_file_size(char *file)
 	return (size);
 }
 
-int	print_error(char *str)
-{
-	if (str)
-	{
-		write(2, str, ft_strlen(str));
-		return (1);
-	}
-	return (0);
-}
-
-int	read_file_array(char *file, t_map *map, t_vars var)
+int	read_file_array(char *file, t_map *map, t_vars vars, int size)
 {
 	int		fd;
 	char	*line;
 
-	init_vars(&var);
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	if (fd < 0)
 		return (1);
 	line = get_next_line(fd);
 	while (line)
 	{
-		map->cmap[var.i] = line;
-		var.i++;
+		map->cmap[vars.i] = line;
+		vars.i++;
 		line = get_next_line(fd);
 	}
-	map->cmap[var.i] = NULL;
+	map->cmap[vars.i] = NULL;
 	close(fd);
+	if (vars.i != size)
+	{
+		fr_array(map->cmap);
+		return (1);
+	}
 	return (0);
 }
