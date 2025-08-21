@@ -1,4 +1,57 @@
-PARSING:
+We can split the program into two phases:
+1. Parsing
+2. Execution
 
-1. need to finalize how to handle spaces
-2. need to ensure all the elements are present in the map  - F C - correct count
+Parsing:
+1. In this phase, we need to ensure that:
+	a. The user enters a valid .cub file (No random file types, 
+		no incorrect maps, the params at the top of the .cub file must be handled)
+	b. Once the .cub file is verified, we can initialize our data structure(s) and move on to
+		execution
+2. need to finalize how to handle spaces
+3. need to ensure all the elements are present in the map  - F C - correct count
+
+Current parsing flow:
+1. We check whether number of arguments are correct
+2. We check if the file extension is correct
+3. We check if the file can be opened.
+4. We find the size of the file, if 0 then it is thrown as an error 
+5. We create a map structure. 
+
+Errors found:
+1. Try and enter a file like ./cub3d test.cub - It will work
+	a. ./cub3d .cub - It will still accept the file, we only check for extension
+	b. ./cub3d.exe "hello .cub"
+2. The read_file_array may need slight modification, it takes the size variable too now, to 
+	ensure that gnl took the correct number of lines to create the map.
+3. Consider changing the parse elements function to your own logic.
+
+Things to consider while parsing elements:
+1. Ensure NO is there
+2. Ensure SO is there
+3. Ensure WE is there
+4. Ensure EA is there
+5. Ensure F is there
+6. Ensure C is there
+7. Ensure nothing else is there - We do this by ensuring that there are only 6 elements apart from the map
+8. We skip over \n sentences and sentences with only spaces using only_spaces check
+9. We ensure that the order of the .cub file is intact by keeping a count of the first 6
+	sentence in our .cub file (that exclude pure \t and space only lines). If there is
+	an invalid element in our file (like NOP or ABC ./file_path), then it returns an error.
+	It also enforces the order of our .cub file by checking whether the map comes above the 
+	required sentences too, and returning an error if it is incorrect.
+
+Storing the map:
+The store_map() function just tries to find the number of rows in the map:
+1. Find the beginning of the map
+2. Find the ending of the map
+3. Check whether empty lines in between
+
+Validate the map:
+The validate_map() function checks whether only the correct characters are in the map (01NSEW, and whether multiple players or none are present)
+1. Check if spaces present in map
+2. Check if other extra characters in the map
+3. Check if only 1 player is present.
+
+
+Execution:
