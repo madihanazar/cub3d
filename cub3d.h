@@ -10,8 +10,8 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <sys/time.h>
-#  include "minilibx_mac/mlx.h"
-// #  include "minilibx-linux/mlx.h" //for windows/linux
+# include "minilibx/mlx.h" //for windows/linux
+// #  include "minilibx_mac/mlx.h"
 
 # if __APPLE__
 #  define ESC_KEY 53

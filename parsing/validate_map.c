@@ -122,6 +122,7 @@ int	validate_map(t_map *map)
 {
 	t_vars	vars;
 
+	init_vars(&vars);
 	if (validate_map_chars(map, vars) == 1)
 		return (1);
 	if (validate_map_walls(map, vars) == 1)
