@@ -43,6 +43,8 @@ int	validate_spaces(t_map *map)
 	i = 1;
 	while (map->map[i])
 	{
+		if (map->map[i][0] == '\0')
+			return (print_error("Error: Empty line in map\n"));
 		j = 1;
 		while (map->map[i][j])
 		{

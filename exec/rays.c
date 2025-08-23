@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 static void	init_ray_delta(t_ray *ray, t_player *player, int x)
 {
@@ -87,13 +87,13 @@ static void	check_ray_side(t_ray *ray, t_player *player)
 	ray->line_height = (int)(WIN_HEIGHT / ray->perp_wall_dist);
 	if (ray->side == 0)
 	{
-		ray->wallx = player->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
+		ray->wallx = player->posY + ray->perp_wall_dist * ray->ray_dir_y;
 		if (ray->step_x < 0)
 			ray->wallx = 1.0 - ray->wallx + floor(ray->wallx);
 	}
 	else
 	{
-		ray->wallx = player->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
+		ray->wallx = player->posX + ray->perp_wall_dist * ray->ray_dir_x;
 		if (ray->step_y < 0)
 			ray->wallx = 1.0 - ray->wallx + floor(ray->wallx);
 	}

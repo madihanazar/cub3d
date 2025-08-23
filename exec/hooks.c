@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnazar <mnazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mnazar <mnazar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 19:03:17 by mnazar            #+#    #+#             */
-/*   Updated: 2025/08/15 19:09:23 by mnazar           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:24:05 by mnazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	render_frames(t_data *data)
 {
@@ -33,7 +33,7 @@ int	render_frames(t_data *data)
 
 int	exit_window(t_data *data)
 {
-	destroy_imgs(data);
+	destroy_image(data);
 	if (data->image.img)
 		mlx_destroy_image(data->mlx.mlx, data->image.img);
 	if (data->mlx.win)

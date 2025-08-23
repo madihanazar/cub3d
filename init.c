@@ -21,7 +21,7 @@ void	init_data(t_data *data)
 	ft_bzero(&data->ray, sizeof(t_ray));
 	ft_bzero(&data->image, sizeof(t_image));
 	ft_bzero(&data->texture, sizeof(t_textures));
-	//ft_bzero(data->keys, 7);
+	ft_bzero(data->keys, 7);
 }
 
 void	init_vars(t_vars *vars)

@@ -29,6 +29,14 @@
 #  define D_KEY 100
 #  define RIGHT_ARROW 65363
 #  define LEFT_ARROW 65361
+#elif _WIN32
+# define ESC_KEY 27
+# define W_KEY 87
+# define A_KEY 65
+# define S_KEY 83
+# define D_KEY 68
+# define LEFT_ARROW 37
+# define RIGHT_ARROW 39
  # endif
  # define WIN_WIDTH 800
  # define WIN_HEIGHT 600
@@ -39,9 +47,7 @@
 # define RED 0xFF0000
 # define DARKRED 0x800000
 
-#define MOVE_SPEED 0.1
-#define ROT_SPEED 0.05
-# define TEX_SIZE 64
+#define MOVE_SPEED 2.0
 # define MOV_SPEED 2.0
 # define ROT_SPEED 0.7
 # define COLLI 0.15
@@ -201,9 +207,9 @@ typedef struct s_draw_walls
 	double			tex_pos;
 }					t_draw_walls;
 
-void 	draw_background(t_game *game);
-void 	draw_walls(t_game *game);
-int		close_game(t_game *game);
+// void 	draw_background(t_game *game);
+// void 	draw_walls(t_game *game);
+// int		close_game(t_game *game);
 
 //main.c
 void	init_start_game(t_data *data);
@@ -222,7 +228,7 @@ void	destroy_image(t_data *data);
 
 // parsing/elements.c
 int		handle_color(char **str);
-int		parse_rgb(char *str);
+int		parse_rgb(char c, t_elements *elem, char *str);
 int		handle_tex(t_elements *elem, char *trim, char **arr);
 int		store_elem(t_elements *elem, char *line);
 

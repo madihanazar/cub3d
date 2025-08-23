@@ -57,7 +57,7 @@ int	parse_elements(t_elements *elem, t_map *map, t_vars vars)
 			{
 				while (map->cmap[vars.i][vars.j])
 				{
-					if (ft_strchr("1\n ", map->cmap[vars.i][vars.j]) == NULL)
+					if (ft_strchr("1\r\n ", map->cmap[vars.i][vars.j]) == NULL) //remove \r only for windows
 						return (print_error("Error: Issue with .cub\n"));
 					vars.j += 1;
 				}

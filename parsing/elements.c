@@ -21,7 +21,7 @@ int	handle_tex(t_elements *elem, char *trim, char **arr)
 	{
 		free(trim);
 		fr_array(arr);
-		return (print_error("Error: Texture files are incorrect"));
+		return (print_error("Error: Texture files are incorrect\n"));
 	}
 	free(trim);
 	trim = ft_strtrim(arr[1], " \t\v\f\r");
