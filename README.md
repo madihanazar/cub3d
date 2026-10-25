@@ -8,6 +8,16 @@ the maze that you can walk around in.
 
 ## Demo
 
+
+https://github.com/user-attachments/assets/1d7f2e6d-a330-44f9-99fe-f067cc11ac69
+
+
+
+
+
+
+
+
 ▶️ [Watch the demo (docs/demo.mp4)](docs/demo.mp4)
 
 ## Building
