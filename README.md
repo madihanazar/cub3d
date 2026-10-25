@@ -9,9 +9,9 @@ the maze that you can walk around in.
 ## Demo
 
 
-https://github.com/user-attachments/assets/1d7f2e6d-a330-44f9-99fe-f067cc11ac69
 
 
+https://github.com/user-attachments/assets/d508dc5c-e8fa-47c5-ac81-85b2aa9f143a
 
 
 
